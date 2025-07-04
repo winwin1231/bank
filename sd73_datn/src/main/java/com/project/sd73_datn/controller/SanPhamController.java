@@ -3,6 +3,7 @@ package com.project.sd73_datn.controller;
 import com.project.sd73_datn.entity.SanPham;
 import com.project.sd73_datn.service.SanPhamService;
 import com.project.sd73_datn.service.ThuocTinhService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -71,6 +72,7 @@ public String showForm(Model model) {
         sanPhamService.delete(id);
         return "redirect:/san-pham";
     }
+    
     private void loadThuocTinh(Model model) {
         model.addAttribute("listDanhMuc", thuocTinhService.getAllDanhMuc());
         model.addAttribute("listHang", thuocTinhService.getAllHang());
@@ -92,12 +94,33 @@ public String showForm(Model model) {
         loadThuocTinh(model); // load các dropdown danh mục, hãng...
         return "sanpham/view"; // file view đã sửa
     }
+    
     @PostMapping("/update")
     public String updateSanPham(@ModelAttribute("sanPham") SanPham sanPham) {
         sanPhamService.update(sanPham); // dùng update thay vì add
         return "redirect:/san-pham"; // hoặc quay về trang chi tiết nếu muốn
     }
 
+    // API để cập nhật nhanh thông tin sản phẩm
+    @PostMapping("/api/update-quick")
+    @ResponseBody
+    public ResponseEntity<String> updateQuick(@RequestBody SanPham sanPham) {
+        try {
+            sanPhamService.update(sanPham);
+            return ResponseEntity.ok("Cập nhật thành công!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Có lỗi xảy ra: " + e.getMessage());
+        }
+    }
 
-
+    // API để lấy thông tin sản phẩm
+    @GetMapping("/api/{id}")
+    @ResponseBody
+    public ResponseEntity<SanPham> getSanPham(@PathVariable Long id) {
+        SanPham sanPham = sanPhamService.getById(id);
+        if (sanPham != null) {
+            return ResponseEntity.ok(sanPham);
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
