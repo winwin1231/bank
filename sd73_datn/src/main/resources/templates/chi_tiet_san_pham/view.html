@@ -1,141 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>Chi tiết sản phẩm</title>-->
-<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--<div class="container mt-4">-->
-<!--  <h3 class="mb-4">Chi tiết sản phẩm: <span th:text="${sanPham.tenSanPham}"></span></h3>-->
-
-<!--  <form th:action="@{/san-pham/save}" method="post">-->
-<!--    <input type="hidden" name="id" th:value="${sanPham.id}"/>-->
-
-<!--    <div class="row g-3">-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Danh mục</label>-->
-<!--        <input class="form-control" th:value="${danhMuc}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Hãng</label>-->
-<!--        <input class="form-control" th:value="${thuongHieu}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Chất liệu</label>-->
-<!--        <input class="form-control" th:value="${chatLieu}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Đế giày</label>-->
-<!--        <input class="form-control" th:value="${deGiay}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Cổ giày</label>-->
-<!--        <input class="form-control" th:value="${coGiay}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Khối lượng</label>-->
-<!--        <input class="form-control" th:value="${khoiLuong}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Xuất xứ</label>-->
-<!--        <input class="form-control" th:value="${xuatXu}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Nhà sản xuất</label>-->
-<!--        <input class="form-control" th:value="${nsx}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label>Đợt giảm giá</label>-->
-<!--        <input class="form-control" th:value="${dotGiamGia}" readonly>-->
-<!--      </div>-->
-<!--      <div class="col-md-12">-->
-<!--        <label>Mô tả</label>-->
-<!--        <textarea class="form-control" name="moTa" th:text="${sanPham.moTa}"></textarea>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="mt-3">-->
-<!--      <button type="submit" class="btn btn-primary">Lưu thay đổi</button>-->
-<!--      <a th:href="@{/san-pham}" class="btn btn-secondary">Quay lại</a>-->
-<!--    </div>-->
-<!--  </form>-->
-
-<!--  <hr class="my-4">-->
-
-<!--  <h5>Biến thể sản phẩm</h5>-->
-<!--  <form th:action="@{/chi-tiet-san-pham/save}" method="post">-->
-<!--    <input type="hidden" name="sanPham.id" th:value="${sanPham.id}" />-->
-
-<!--    <div class="row g-3">-->
-<!--      <div class="col-md-3">-->
-<!--        <label>Màu sắc</label>-->
-<!--        <select class="form-control" name="mauSac.id">-->
-<!--          <option th:each="ms : ${listMauSac}" th:value="${ms.id}" th:text="${ms.tenMau}"></option>-->
-<!--        </select>-->
-<!--      </div>-->
-<!--      <div class="col-md-3">-->
-<!--        <label>Kích thước</label>-->
-<!--        <select class="form-control" name="kichThuoc.id">-->
-<!--          <option th:each="kt : ${listKichThuoc}" th:value="${kt.id}" th:text="${kt.size}"></option>-->
-<!--        </select>-->
-<!--      </div>-->
-<!--      <div class="col-md-3">-->
-<!--        <label>Đơn giá</label>-->
-<!--        <input type="number" class="form-control" name="donGia" required />-->
-<!--      </div>-->
-<!--      <div class="col-md-3">-->
-<!--        <label>Số lượng</label>-->
-<!--        <input type="number" class="form-control" name="soLuong" required />-->
-<!--      </div>-->
-<!--      <div class="col-md-12">-->
-<!--        <label>Ghi chú</label>-->
-<!--        <input type="text" class="form-control" name="ghiChu" />-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="mt-3">-->
-<!--      <button type="submit" class="btn btn-success">Thêm biến thể</button>-->
-<!--    </div>-->
-<!--  </form>-->
-
-<!--  <table class="table table-bordered table-hover mt-4">-->
-<!--    <thead class="table-light">-->
-<!--    <tr>-->
-<!--      <th>Mã CTSP</th>-->
-<!--      <th>Màu sắc</th>-->
-<!--      <th>Kích thước</th>-->
-<!--      <th>Giá</th>-->
-<!--      <th>Số lượng</th>-->
-<!--      <th>Ghi chú</th>-->
-<!--      <th>Trạng thái</th>-->
-<!--      <th>Thao tác</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr th:each="ct : ${listChiTiet}">-->
-<!--      <td th:text="${ct.maCTSP}">CT01</td>-->
-<!--      <td th:text="${ct.mauSac?.tenMau}">Đỏ</td>-->
-<!--      <td th:text="${ct.kichThuoc?.size}">42</td>-->
-<!--      <td th:text="${ct.donGia}">100000</td>-->
-<!--      <td th:text="${ct.soLuong}">5</td>-->
-<!--      <td th:text="${ct.ghiChu}">Chi tiết</td>-->
-<!--      <td>-->
-<!--        <span class="badge bg-success" th:if="${ct.trangThai == 1}">Còn bán</span>-->
-<!--        <span class="badge bg-secondary" th:if="${ct.trangThai != 1}">Ngừng bán</span>-->
-<!--      </td>-->
-<!--      <td>-->
-<!--        <a th:href="@{'/chi-tiet-san-pham/delete/' + ${ct.id}}" class="btn btn-sm btn-outline-danger"-->
-<!--           onclick="return confirm('Bạn chắc chắn muốn xóa?')">Xóa</a>-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -518,6 +380,47 @@
       font-weight: 600;
     }
 
+    .modal-content {
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, var(--warning-color) 0%, #f59e0b 100%);
+      color: white;
+      border-radius: 12px 12px 0 0;
+      border-bottom: none;
+    }
+
+    .modal-title {
+      font-weight: 600;
+    }
+
+    .btn-close {
+      filter: invert(1);
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loading-spinner {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
     @media (max-width: 768px) {
       .sidebar {
         width: 100%;
@@ -541,6 +444,16 @@
   </style>
 </head>
 <body>
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="mt-2">Đang xử lý...</div>
+  </div>
+</div>
+
 <!-- Sidebar -->
 <div class="sidebar">
   <div class="sidebar-header">
@@ -787,10 +700,11 @@
           </td>
           <td>
             <div class="btn-group" role="group">
-              <a th:href="@{'/chi-tiet-san-pham/edit/' + ${ct.id}}"
-                 class="btn btn-sm btn-outline-primary" title="Chỉnh sửa">
+              <button class="btn btn-sm btn-outline-primary" 
+                      th:onclick="'editChiTiet(' + ${ct.id} + ')'" 
+                      title="Chỉnh sửa nhanh">
                 <i class="bi bi-pencil"></i>
-              </a>
+              </button>
               <a th:href="@{'/chi-tiet-san-pham/delete/' + ${ct.id}}"
                  class="btn btn-sm btn-outline-danger"
                  onclick="return confirm('Bạn chắc chắn muốn xóa biến thể này?')" title="Xóa">
@@ -814,6 +728,210 @@
   </div>
 </div>
 
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">
+          <i class="bi bi-pencil-square"></i> Chỉnh sửa biến thể sản phẩm
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm">
+          <input type="hidden" id="editId" name="id">
+          <input type="hidden" id="editSanPhamId" name="sanPham.id">
+          
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Mã chi tiết sản phẩm</label>
+              <input type="text" class="form-control" id="editMaCTSP" name="maCTSP" placeholder="Nhập mã CTSP">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Tên chi tiết sản phẩm</label>
+              <input type="text" class="form-control" id="editTenCTSP" name="tenCTSP" placeholder="Nhập tên CTSP">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Màu sắc <span class="required">*</span></label>
+              <select class="form-select" id="editMauSac" name="mauSac.id" required>
+                <option value="">-- Chọn màu sắc --</option>
+                <option th:each="ms : ${listMauSac}" th:value="${ms.id}" th:text="${ms.tenMau}"></option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Kích thước <span class="required">*</span></label>
+              <select class="form-select" id="editKichThuoc" name="kichThuoc.id" required>
+                <option value="">-- Chọn kích thước --</option>
+                <option th:each="kt : ${listKichThuoc}" th:value="${kt.id}" th:text="${kt.size}"></option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Đơn giá (VNĐ) <span class="required">*</span></label>
+              <input type="number" class="form-control" id="editDonGia" name="donGia" min="0" step="1000" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Số lượng <span class="required">*</span></label>
+              <input type="number" class="form-control" id="editSoLuong" name="soLuong" min="0" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Trạng thái</label>
+              <select class="form-select" id="editTrangThai" name="trangThai">
+                <option value="1">Còn bán</option>
+                <option value="0">Ngừng bán</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Ghi chú</label>
+              <input type="text" class="form-control" id="editGhiChu" name="ghiChu" placeholder="Ghi chú thêm...">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="bi bi-x-circle"></i> Hủy
+        </button>
+        <button type="button" class="btn btn-primary" onclick="saveEdit()">
+          <i class="bi bi-check-circle"></i> Lưu thay đổi
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Hiển thị loading overlay
+function showLoading() {
+    document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+// Ẩn loading overlay
+function hideLoading() {
+    document.getElementById('loadingOverlay').style.display = 'none';
+}
+
+// Hiển thị thông báo
+function showAlert(message, type = 'success') {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 10000; min-width: 300px;';
+    alertDiv.innerHTML = `
+        <i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(alertDiv);
+    
+    // Tự động ẩn sau 5 giây
+    setTimeout(() => {
+        if (alertDiv.parentNode) {
+            alertDiv.remove();
+        }
+    }, 5000);
+}
+
+// Mở modal chỉnh sửa
+function editChiTiet(id) {
+    showLoading();
+    
+    fetch(`/chi-tiet-san-pham/api/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Không thể tải dữ liệu');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Điền dữ liệu vào form
+            document.getElementById('editId').value = data.id;
+            document.getElementById('editSanPhamId').value = data.sanPham.id;
+            document.getElementById('editMaCTSP').value = data.maCTSP || '';
+            document.getElementById('editTenCTSP').value = data.tenCTSP || '';
+            document.getElementById('editDonGia').value = data.donGia || '';
+            document.getElementById('editSoLuong').value = data.soLuong || '';
+            document.getElementById('editGhiChu').value = data.ghiChu || '';
+            document.getElementById('editTrangThai').value = data.trangThai || 1;
+            
+            // Set màu sắc và kích thước
+            if (data.mauSac) {
+                document.getElementById('editMauSac').value = data.mauSac.id;
+            }
+            if (data.kichThuoc) {
+                document.getElementById('editKichThuoc').value = data.kichThuoc.id;
+            }
+            
+            hideLoading();
+            
+            // Hiển thị modal
+            const modal = new bootstrap.Modal(document.getElementById('editModal'));
+            modal.show();
+        })
+        .catch(error => {
+            hideLoading();
+            showAlert('Có lỗi xảy ra khi tải dữ liệu: ' + error.message, 'danger');
+        });
+}
+
+// Lưu thay đổi
+function saveEdit() {
+    const form = document.getElementById('editForm');
+    const formData = new FormData(form);
+    
+    // Chuyển FormData thành object
+    const data = {};
+    for (let [key, value] of formData.entries()) {
+        if (key.includes('.')) {
+            const [parent, child] = key.split('.');
+            if (!data[parent]) data[parent] = {};
+            data[parent][child] = value;
+        } else {
+            data[key] = value;
+        }
+    }
+    
+    showLoading();
+    
+    fetch('/chi-tiet-san-pham/api/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(text);
+            });
+        }
+        return response.text();
+    })
+    .then(message => {
+        hideLoading();
+        showAlert(message, 'success');
+        
+        // Đóng modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+        modal.hide();
+        
+        // Reload trang sau 1 giây
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    })
+    .catch(error => {
+        hideLoading();
+        showAlert('Có lỗi xảy ra: ' + error.message, 'danger');
+    });
+}
+
+// Xử lý form validation
+document.getElementById('editForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    saveEdit();
+});
+</script>
 </body>
 </html>

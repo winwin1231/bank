@@ -22,6 +22,10 @@ public class ChiTietSanPhamService {
         repo.save(ctsp);
     }
 
+    public ChiTietSanPham getById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
+
     public void delete(Long id) {
         repo.deleteById(id);
     }

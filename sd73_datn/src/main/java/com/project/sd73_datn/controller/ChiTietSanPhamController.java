@@ -5,6 +5,7 @@ import com.project.sd73_datn.entity.SanPham;
 import com.project.sd73_datn.service.ChiTietSanPhamService;
 import com.project.sd73_datn.service.SanPhamService;
 import com.project.sd73_datn.service.ThuocTinhService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class ChiTietSanPhamController {
         ctspService.save(chiTietSanPham);
         return "redirect:/chi-tiet-san-pham/" + chiTietSanPham.getSanPham().getId();
     }
+
     @GetMapping("/{id}")
     public String viewChiTietSanPhamTheoSP(@PathVariable Long id, Model model) {
         SanPham sp = sanPhamService.getById(id);
@@ -58,9 +60,37 @@ public class ChiTietSanPhamController {
         model.addAttribute("nsx", sp.getNsx() != null ? sp.getNsx().getTenNSX() : "");
         model.addAttribute("dotGiamGia", sp.getDotGiamGia() != null ? sp.getDotGiamGia().getTenDot() : "");
 
-
-        return "chi_tiet_san_pham/view"; // Tạo file mới: view.html
+        return "chi_tiet_san_pham/view";
     }
 
+    // API để lấy thông tin chi tiết sản phẩm cho modal edit
+    @GetMapping("/api/{id}")
+    @ResponseBody
+    public ResponseEntity<ChiTietSanPham> getChiTietSanPham(@PathVariable Long id) {
+        ChiTietSanPham chiTiet = ctspService.getById(id);
+        if (chiTiet != null) {
+            return ResponseEntity.ok(chiTiet);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
+    // API để cập nhật chi tiết sản phẩm
+    @PostMapping("/api/update")
+    @ResponseBody
+    public ResponseEntity<String> updateChiTietSanPham(@RequestBody ChiTietSanPham chiTietSanPham) {
+        try {
+            ctspService.save(chiTietSanPham);
+            return ResponseEntity.ok("Cập nhật thành công!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Có lỗi xảy ra: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        ChiTietSanPham ctsp = ctspService.getById(id);
+        Long sanPhamId = ctsp.getSanPham().getId();
+        ctspService.delete(id);
+        return "redirect:/chi-tiet-san-pham/" + sanPhamId;
+    }
 }
