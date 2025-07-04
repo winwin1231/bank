@@ -1,0 +1,295 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Quản lý sản phẩm</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <style>-->
+<!--        body {-->
+<!--            display: flex;-->
+<!--        }-->
+<!--        .sidebar {-->
+<!--            width: 250px;-->
+<!--            height: 100vh;-->
+<!--            background-color: #f8f9fa;-->
+<!--            padding-top: 20px;-->
+<!--            border-right: 1px solid #dee2e6;-->
+<!--        }-->
+<!--        .sidebar a {-->
+<!--            display: block;-->
+<!--            padding: 10px 20px;-->
+<!--            color: #333;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--        .sidebar a:hover {-->
+<!--            background-color: #e9ecef;-->
+<!--        }-->
+<!--        .content {-->
+<!--            flex-grow: 1;-->
+<!--            padding: 30px;-->
+<!--        }-->
+<!--        input[type="number"] {-->
+<!--            width: 80px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="sidebar">-->
+<!--    <a th:href="@{/san-pham}">Sản phẩm</a>-->
+<!--    <a th:href="@{/chi-tiet-san-pham}">Chi tiết sản phẩm</a>-->
+<!--    <a th:href="@{/thuoc-tinh}">Thuộc tính</a>-->
+<!--</div>-->
+
+<!--<div class="content">-->
+<!--    <h3 th:text="${formTitle}">Thêm / Sửa sản phẩm</h3>-->
+
+<!--    <form th:action="@{/san-pham/save}" th:object="${sanPham}" method="post">-->
+<!--        <input type="hidden" th:field="*{id}" />-->
+
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">Mã sản phẩm</label>-->
+<!--            <input type="text" th:field="*{maSP}" class="form-control" required />-->
+<!--        </div>-->
+
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">Tên sản phẩm</label>-->
+<!--            <input type="text" th:field="*{tenSanPham}" class="form-control" required />-->
+<!--        </div>-->
+
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">Mô tả</label>-->
+<!--            <textarea th:field="*{moTa}" class="form-control"></textarea>-->
+<!--        </div>-->
+
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">URL Hình ảnh</label>-->
+<!--            <input type="text" th:field="*{urlHinhAnh}" class="form-control" />-->
+<!--        </div>-->
+
+<!--        <div class="row">-->
+<!--            <div class="col-md-6 mb-3">-->
+<!--                <label class="form-label">Thương hiệu</label>-->
+<!--                <select th:field="*{hang.id}" class="form-select" required>-->
+<!--                    <option value="">&#45;&#45; Chọn thương hiệu &#45;&#45;</option>-->
+<!--                    <option th:each="h : ${listHang}" th:value="${h.id}" th:text="${h.tenHang}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 mb-3">-->
+<!--                <label class="form-label">Danh mục</label>-->
+<!--                <select th:field="*{danhMuc.id}" class="form-select" required>-->
+<!--                    <option value="">&#45;&#45; Chọn danh mục &#45;&#45;</option>-->
+<!--                    <option th:each="dm : ${listDanhMuc}" th:value="${dm.id}" th:text="${dm.tenDanhMuc}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="row">-->
+<!--            <div class="col-md-6 mb-3">-->
+<!--                <label class="form-label">Chất liệu</label>-->
+<!--                <select th:field="*{chatLieu.id}" class="form-select">-->
+<!--                    <option value="">&#45;&#45; Chọn chất liệu &#45;&#45;</option>-->
+<!--                    <option th:each="cl : ${listChatLieu}" th:value="${cl.id}" th:text="${cl.loai}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 mb-3">-->
+<!--                <label class="form-label">Đế giày</label>-->
+<!--                <select th:field="*{deGiay.id}" class="form-select">-->
+<!--                    <option value="">&#45;&#45; Chọn đế giày &#45;&#45;</option>-->
+<!--                    <option th:each="dg : ${listDeGiay}" th:value="${dg.id}" th:text="${dg.tenDeGiay}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="row">-->
+<!--            <div class="col-md-6 mb-3">-->
+<!--                <label class="form-label">Khối lượng</label>-->
+<!--                <select th:field="*{khoiLuong.id}" class="form-select">-->
+<!--                    <option value="">&#45;&#45; Chọn khối lượng &#45;&#45;</option>-->
+<!--                    <option th:each="kl : ${listKhoiLuong}" th:value="${kl.id}" th:text="${kl.tenKhoiLuong}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 mb-3">-->
+<!--                <label class="form-label">Trạng thái</label>-->
+<!--                <select th:field="*{trangThai}" class="form-select">-->
+<!--                    <option value="1">Đang bán</option>-->
+<!--                    <option value="0">Ngừng bán</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">Ghi chú</label>-->
+<!--            <textarea th:field="*{ghiChu}" class="form-control"></textarea>-->
+<!--        </div>-->
+
+<!--        <div class="mt-4">-->
+<!--            <button type="submit" class="btn btn-primary">Lưu sản phẩm</button>-->
+<!--            <a th:href="@{/san-pham}" class="btn btn-secondary">Hủy</a>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý sản phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            background-color: #f4f6f9;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #fff;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #adb5bd;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #495057;
+            color: #fff;
+        }
+        .sidebar i {
+            margin-right: 12px;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+        }
+        .btn {
+            border-radius: 8px;
+        }
+        .navbar {
+            background-color: #fff;
+            border-bottom: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h4 class="text-center mb-4">Admin</h4>
+    <a th:href="@{/san-pham}" class="active"><i class="bi bi-box"></i> Sản phẩm</a>
+    <a th:href="@{/chi-tiet-san-pham}"><i class="bi bi-card-list"></i> Chi tiết sản phẩm</a>
+    <a th:href="@{/thuoc-tinh}"><i class="bi bi-tag"></i> Thuộc tính</a>
+</div>
+
+<div class="content">
+    <nav class="navbar mb-4 p-3">
+        <span class="fs-5">Quản lý sản phẩm</span>
+    </nav>
+
+    <div class="card p-4">
+        <h4 class="mb-4" th:text="${formTitle}">Thêm / Sửa sản phẩm</h4>
+
+        <form th:action="@{/san-pham/save}" th:object="${sanPham}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="mb-3">
+                <label class="form-label">Mã sản phẩm</label>
+                <input type="text" th:field="*{maSP}" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tên sản phẩm</label>
+                <input type="text" th:field="*{tenSanPham}" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mô tả</label>
+                <textarea th:field="*{moTa}" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">URL Hình ảnh</label>
+                <input type="text" th:field="*{urlHinhAnh}" class="form-control" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Thương hiệu</label>
+                    <select th:field="*{hang.id}" class="form-select" required>
+                        <option value="">-- Chọn thương hiệu --</option>
+                        <option th:each="h : ${listHang}" th:value="${h.id}" th:text="${h.tenHang}"></option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Danh mục</label>
+                    <select th:field="*{danhMuc.id}" class="form-select" required>
+                        <option value="">-- Chọn danh mục --</option>
+                        <option th:each="dm : ${listDanhMuc}" th:value="${dm.id}" th:text="${dm.tenDanhMuc}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Chất liệu</label>
+                    <select th:field="*{chatLieu.id}" class="form-select">
+                        <option value="">-- Chọn chất liệu --</option>
+                        <option th:each="cl : ${listChatLieu}" th:value="${cl.id}" th:text="${cl.loai}"></option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Đế giày</label>
+                    <select th:field="*{deGiay.id}" class="form-select">
+                        <option value="">-- Chọn đế giày --</option>
+                        <option th:each="dg : ${listDeGiay}" th:value="${dg.id}" th:text="${dg.tenDeGiay}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Khối lượng</label>
+                    <select th:field="*{khoiLuong.id}" class="form-select">
+                        <option value="">-- Chọn khối lượng --</option>
+                        <option th:each="kl : ${listKhoiLuong}" th:value="${kl.id}" th:text="${kl.tenKhoiLuong}"></option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <select th:field="*{trangThai}" class="form-select">
+                        <option value="1">Đang bán</option>
+                        <option value="0">Ngừng bán</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ghi chú</label>
+                <textarea th:field="*{ghiChu}" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary px-4 me-2">💾 Lưu</button>
+                <a th:href="@{/san-pham}" class="btn btn-secondary px-4">↩️ Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
